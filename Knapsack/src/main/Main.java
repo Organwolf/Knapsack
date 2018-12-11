@@ -1,9 +1,10 @@
-package application;
+package main;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 
 
 public class Main extends Application {
@@ -12,6 +13,7 @@ public class Main extends Application {
 		try {
 			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,400,400);
+			scene.setFill(Color.BROWN); 
 			primaryStage.setTitle("Knapsack Assignment");
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
