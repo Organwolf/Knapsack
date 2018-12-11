@@ -12,7 +12,8 @@ public class Knapsack {
 	public Knapsack(Stage primaryStage) {
 		knapsackView = new KnapsackView(primaryStage);
 		knapsackView.initWindow();
-		fillKnapSacksRandomly();
+		fillKnapSacksRandomly(); //Just for testing
+		generateItems();		 //Just for testing
 	}
 	
 	
@@ -26,8 +27,19 @@ public class Knapsack {
 				float rValue = (float)value/weight;
 				knapsackView.addItemToKnapSack(i, new Item(value, weight, rValue));
 			}
-			
 		}
+	}
+	
+	private void generateItems() {
+		Random rand = new Random();
+		Item[] items = new Item[Settings.NUMBER_OF_ITEMS];
+		for (int i = 0; i < Settings.NUMBER_OF_ITEMS; i++) {
+			int value = rand.nextInt(5)+1;
+			int weight = rand.nextInt(5)+1;
+			float rValue = (float)value/weight;
+			items[i] = new Item(value, weight, rValue);
+		}
+		knapsackView.updateBottomView(items);
 	}
 
 }

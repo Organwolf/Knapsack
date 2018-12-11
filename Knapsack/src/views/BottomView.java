@@ -1,30 +1,31 @@
 package views;
 
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.layout.HBox;
 import pojos.Item;
 
-public class BagView extends VBox{
-	
-	public BagView(String bagName) {
-	    //10/10 design!
-	    String cssLayout = "-fx-border-color: red;\n" +
+public class BottomView extends HBox{
+	public BottomView() {
+		//10/10 design!
+	    String cssLayout = "-fx-border-color: Green;\n" +
                 "-fx-border-insets: 5;\n" +
                 "-fx-border-width: 3;\n" +
                 "-fx-border-style: dashed;\n";
 	    this.setStyle(cssLayout);
-	    
-		Text title = new Text(bagName);
-	    title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-	    this.getChildren().add(title);
 	}
 	
 	public void addItem(Item item) {
 		this.getChildren().add(new ItemView(String.valueOf(item.getValue()), 
 				String.valueOf(item.getWeight()), 
 				String.valueOf(item.getrValue())));
+	}
+	
+	public void addAll(Item items[], boolean removePrevItems) {
+		if(removePrevItems) {
+			removeAllItems();
+		}
+		for (int i = 0; i < items.length; i++) {
+			addItem(items[i]);
+		}
 	}
 	
 	public void removeAllItems() {
