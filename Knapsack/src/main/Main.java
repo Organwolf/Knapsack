@@ -1,6 +1,6 @@
 package main;
 	
-import controllers.Knapsack;
+import controllers.KnapsackController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
-		new Knapsack(primaryStage);
+		new KnapsackController(primaryStage);
 	}
 	
 	public static void main(String[] args) {

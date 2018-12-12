@@ -1,6 +1,6 @@
 package pojos;
 
-public class Item {
+public class Item implements Comparable<Item>{
 	private int value;
 	private int weight;
 	private float rValue;
@@ -34,6 +34,17 @@ public class Item {
 	public void setrValue(float rValue) {
 		this.rValue = rValue;
 	}
+
+	/**
+	 * Used to sort Items in ascending order based on rValue
+	 */
+	@Override
+	public int compareTo(Item other) {
+		if(rValue>=other.rValue) return 1;
+		else return -1;
+	}
+	
+	
 	
 
 }

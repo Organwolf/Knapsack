@@ -1,6 +1,6 @@
 package views;
 
-import controllers.Knapsack;
+import controllers.KnapsackController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -10,10 +10,10 @@ public class LeftView extends VBox{
 	private Button startBtn;
 	private Button stepBtn;
 	private Button resetBtn;
-	private Knapsack controller;
+	private KnapsackController controller;
 	
 	//input controller instance
-	public LeftView(Knapsack controller) {
+	public LeftView(KnapsackController controller) {
 		
 		// created when trying to incorporate the controller
 		this.controller = controller;

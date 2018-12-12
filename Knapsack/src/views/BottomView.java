@@ -1,5 +1,7 @@
 package views;
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.HBox;
 import pojos.Item;
 
@@ -19,12 +21,12 @@ public class BottomView extends HBox{
 				String.valueOf(item.getrValue())));
 	}
 	
-	public void addAll(Item items[], boolean removePrevItems) {
+	public void addAll(ArrayList<Item> items, boolean removePrevItems) {
 		if(removePrevItems) {
 			removeAllItems();
 		}
-		for (int i = 0; i < items.length; i++) {
-			addItem(items[i]);
+		for (int i = 0; i < items.size(); i++) {
+			addItem(items.get(i));
 		}
 	}
 	
