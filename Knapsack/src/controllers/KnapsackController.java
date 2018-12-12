@@ -18,16 +18,83 @@ import views.KnapsackView;
 
 public class KnapsackController {
 	private KnapsackView knapsackView;
-	private Bag[] bags;
+	private ArrayList<Bag> bags;
 	private ArrayList<Item> availableItems;
 	public KnapsackController(Stage primaryStage) {
+		initBags();
 		knapsackView = new KnapsackView(primaryStage);
 		knapsackView.initWindow();
 		//fillKnapSacksRandomly(); //Just for testing
 		generateItems();		 //Just for testing
 		generateGreedySolution();
-		bags = new Bag[Settings.NUMBER_OF_KNAPSACKS];
 	}
+	
+	private void initBags() {
+		bags = new ArrayList<>();
+		for (int i = 0; i < Settings.NUMBER_OF_KNAPSACKS; i++) {
+			bags.add(new Bag());
+		}
+	}
+	
+	private void generateItems() {
+		Random rand = new Random();
+		availableItems = new ArrayList<>();
+		for (int i = 0; i < Settings.NUMBER_OF_ITEMS; i++) {
+			int value = rand.nextInt(5)+1;
+			int weight = rand.nextInt(5)+1;
+			float rValue = (float)value/weight;
+			availableItems.add(new Item(value, weight, rValue));
+		}
+		knapsackView.updateBottomView(availableItems);
+	}
+	/**
+	 * Work in progress. Algorithm could be simplified. 
+	 * Sorts the item list in descending order based on rValue. Then items are picked one by one and placed into available bags until weight limit is reached.
+	 */
+	public void generateGreedySolution() {
+		ArrayList<Item> updatedAvailableItems = new ArrayList<>();
+		Collections.sort(availableItems);
+		for (int i = 0; i < availableItems.size(); i++) {
+			Item tempItem = availableItems.get(i);
+			boolean itemChosen = false;
+			for (int j = 0; j < bags.size(); j++) {
+				Bag tempBag = bags.get(j);
+				int tempWeight = tempBag.getWeight() + tempItem.getWeight();
+				if(tempWeight<=Settings.WEIGHT_CAPACITY) {
+					tempBag.addItem(tempItem);
+					itemChosen = true;
+					break; //no need to iterate the other bags on the same Item.
+				}
+			}
+			if(!itemChosen) {
+				updatedAvailableItems.add(tempItem);
+			}
+		}
+		availableItems = updatedAvailableItems; //the not picked items
+		knapsackView.updateBottomView(availableItems);
+		for (int i = 0; i < bags.size(); i++) {
+			for (int j = 0; j < bags.get(i).getnbrOfItems(); j++) {
+				knapsackView.addItemToKnapSack(i, bags.get(i).getItems().get(j));
+			}
+		}
+		
+	}
+
+
+	public void changeText(Button btn, String str) {
+		btn.setText(str); 	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//Just for development purpose in order to test bag functionality.
@@ -42,39 +109,5 @@ public class KnapsackController {
 //			}
 //		}
 //	}
-	
-	private void generateItems() {
-		Random rand = new Random();
-		availableItems = new ArrayList<>();
-		for (int i = 0; i < Settings.NUMBER_OF_ITEMS; i++) {
-			int value = rand.nextInt(5)+1;
-			int weight = rand.nextInt(5)+1;
-			float rValue = (float)value/weight;
-			availableItems.add(new Item(value, weight, rValue));
-		}
-		knapsackView.updateBottomView(availableItems);
-	}
-	
-	public void generateGreedySolution() {
-		for (int i = 0; i < availableItems.size(); i++) {
-			System.out.print(availableItems.get(i).getrValue() + ", ");
-		}
-		System.out.println();
-		System.out.println("-----------------");
-		Collections.sort(availableItems);
-		for (int i = 0; i < availableItems.size(); i++) {
-			System.out.print(availableItems.get(i).getrValue() + ", ");
-		}
-//		for (int i = 0; i < availableItems.length; i++) {
-//			for (int j = 0; j < bags.length; j++) {
-//				
-//			}
-//		}
-	}
-
-
-	public void changeText(Button btn, String str) {
-		btn.setText(str); 	
-	}
 
 }

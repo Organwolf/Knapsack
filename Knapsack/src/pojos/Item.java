@@ -36,11 +36,11 @@ public class Item implements Comparable<Item>{
 	}
 
 	/**
-	 * Used to sort Items in ascending order based on rValue
+	 * Used to sort Items in descending order based on rValue
 	 */
 	@Override
 	public int compareTo(Item other) {
-		if(rValue>=other.rValue) return 1;
+		if(rValue<=other.rValue) return 1;
 		else return -1;
 	}
 	

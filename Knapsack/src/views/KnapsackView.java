@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import pojos.Bag;
 import pojos.Item;
 
 public class KnapsackView {
@@ -53,4 +54,5 @@ public class KnapsackView {
 	public void updateBottomView(ArrayList<Item> items) {
 		bottomView.addAll(items, true);
 	}
+
 }
