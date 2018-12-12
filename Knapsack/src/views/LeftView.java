@@ -29,6 +29,10 @@ public class LeftView extends VBox{
 		this.getChildren().add(stepBtn);
 		this.getChildren().add(resetBtn);
 		
+//		startBtn.setOnAction((ActionEvent event)->System.out.println("start"));
+//		stepBtn.setOnAction((ActionEvent event)->System.out.println("step"));
+//		resetBtn.setOnAction((ActionEvent event)->System.out.println("reset"));
+		
 		// How the fuck do I get this into the controller?
 		//controller.changeText(startBtn, "hello");			
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() { 

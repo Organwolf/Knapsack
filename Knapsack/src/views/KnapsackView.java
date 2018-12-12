@@ -14,7 +14,7 @@ public class KnapsackView {
 	private CenterView centerView;
 	private BottomView bottomView;
 	private LeftView leftView;
-	// is this what I should instantiate to eb able to send
+	// is this what I should instantiate to be able to send
 	// the controller to the LeftView?
 	private Knapsack controller;
 	
