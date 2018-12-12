@@ -1,5 +1,6 @@
 package views;
 
+import controllers.Knapsack;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -13,6 +14,9 @@ public class KnapsackView {
 	private CenterView centerView;
 	private BottomView bottomView;
 	private LeftView leftView;
+	// is this what I should instantiate to eb able to send
+	// the controller to the LeftView?
+	private Knapsack controller;
 	
 	public KnapsackView(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -20,14 +24,14 @@ public class KnapsackView {
 	public void initWindow() {
 		try {
 			BorderPane root = new BorderPane();
-			leftView = new LeftView();
+			leftView = new LeftView(controller);
 			centerView = new CenterView();
 			bottomView = new BottomView();
 			ScrollPane sp1 = new ScrollPane();
 			ScrollPane sp2 = new ScrollPane();
 			sp1.setContent(centerView);
 			sp2.setContent(bottomView);
-			root.setLeft(leftView);
+			root.setLeft(leftView);				// Left view for buttons
 			root.setCenter(sp1);
 			root.setBottom(sp2);
 			Scene scene = new Scene(root,600,600);

@@ -2,10 +2,15 @@ package controllers;
 
 import java.util.Random;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import main.Settings;
 import pojos.Item;
 import views.KnapsackView;
+
+// Controller class for the Knapsack
 
 public class Knapsack {
 	KnapsackView knapsackView;
@@ -40,6 +45,11 @@ public class Knapsack {
 			items[i] = new Item(value, weight, rValue);
 		}
 		knapsackView.updateBottomView(items);
+	}
+
+
+	public void changeText(Button btn, String str) {
+		btn.setText(str); 	
 	}
 
 }
