@@ -1,6 +1,7 @@
 package views;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -11,6 +12,7 @@ public class KnapsackView {
 	private Stage primaryStage;
 	private CenterView centerView;
 	private BottomView bottomView;
+	private LeftView leftView;
 	
 	public KnapsackView(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -18,15 +20,15 @@ public class KnapsackView {
 	public void initWindow() {
 		try {
 			BorderPane root = new BorderPane();
+			leftView = new LeftView();
 			centerView = new CenterView();
 			bottomView = new BottomView();
 			ScrollPane sp1 = new ScrollPane();
 			ScrollPane sp2 = new ScrollPane();
 			sp1.setContent(centerView);
 			sp2.setContent(bottomView);
-			//root.setCenter(centerView);
+			root.setLeft(leftView);
 			root.setCenter(sp1);
-			//root.setBottom(bottomView);
 			root.setBottom(sp2);
 			Scene scene = new Scene(root,600,600);
 			scene.setFill(Color.ALICEBLUE);
