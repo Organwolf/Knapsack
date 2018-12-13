@@ -58,5 +58,9 @@ public class KnapsackView {
 	public void updateBottomView(ArrayList<Item> items) {
 		bottomView.addAll(items, true);
 	}
+	
+	public void updateRightView(int value) {
+		rightView.setTextValue(value);
+	}
 
 }

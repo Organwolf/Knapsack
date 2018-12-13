@@ -72,6 +72,7 @@ public class KnapsackController {
 				break;		//We have placed one item, method should terminate.
 			}
 		}
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 	
 	/**
@@ -105,6 +106,7 @@ public class KnapsackController {
 				knapsackView.addItemToKnapSack(i, bags.get(i).getItems().get(j));
 			}
 		}
-		System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+		//System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 }
