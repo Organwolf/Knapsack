@@ -7,9 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 
 public class LeftView extends VBox{
-	private Button startBtn;
+	private Button solveBtn;
 	private Button stepBtn;
-	private Button resetBtn;
 	private KnapsackController controller;
 	
 	//input controller instance
@@ -22,41 +21,29 @@ public class LeftView extends VBox{
 	}
 
 	private void initButtonsInVBox() {
-		startBtn = new Button("Start  ");
+		solveBtn = new Button("Solve  ");
 		stepBtn = new Button("Step   ");
-		resetBtn = new Button("Reset ");
-		this.getChildren().add(startBtn);
+		this.getChildren().add(solveBtn);
 		this.getChildren().add(stepBtn);
-		this.getChildren().add(resetBtn);
 		
 //		startBtn.setOnAction((ActionEvent event)->System.out.println("start"));
 //		stepBtn.setOnAction((ActionEvent event)->System.out.println("step"));
 //		resetBtn.setOnAction((ActionEvent event)->System.out.println("reset"));
-		
-		// How the fuck do I get this into the controller?
-		//controller.changeText(startBtn, "hello");			
+				
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
             { 
-                startBtn.setText("hello"); 
+                controller.generateGreedySolution();
             } 
         };
-        startBtn.setOnAction(event1);
+        solveBtn.setOnAction(event1);
 		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
             { 
-                //stepBtn.setText("world"); 
-            	controller.pickGreedyItem();
+            		controller.pickGreedyItem();
             } 
         };
         stepBtn.setOnAction(event2);
-		EventHandler<ActionEvent> event3 = new EventHandler<ActionEvent>() { 
-            public void handle(ActionEvent e) 
-            { 
-                resetBtn.setText("!!!!!"); 
-            } 
-        };
-        resetBtn.setOnAction(event3);
 	}
 
 }
