@@ -37,13 +37,16 @@ public class LeftView extends VBox{
             } 
         };
         solveBtn.setOnAction(event1);
+        
 		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
-            { 
+            {
+            		solveBtn.setDisable(true);
             		controller.pickGreedyItem();
             } 
         };
         stepBtn.setOnAction(event2);
+        
 	}
 
 }
