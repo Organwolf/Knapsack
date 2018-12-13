@@ -45,7 +45,8 @@ public class LeftView extends VBox{
 		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
             { 
-                stepBtn.setText("world"); 
+                //stepBtn.setText("world"); 
+            	controller.pickGreedyItem();
             } 
         };
         stepBtn.setOnAction(event2);

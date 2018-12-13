@@ -22,7 +22,7 @@ public class KnapsackController {
 	private ArrayList<Item> availableItems;
 	public KnapsackController(Stage primaryStage) {
 		initBags();
-		knapsackView = new KnapsackView(primaryStage);
+		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
 		//fillKnapSacksRandomly(); //Just for testing
 		generateItems();		 //Just for testing
@@ -45,23 +45,49 @@ public class KnapsackController {
 			float rValue = (float)value/weight;
 			availableItems.add(new Item(value, weight, rValue));
 		}
+		Collections.sort(availableItems);
 		knapsackView.updateBottomView(availableItems);
 	}
+	
+	public void pickGreedyItem() {
+		int indexOfBagChosen = 0;
+		for (int i = 0; i < availableItems.size(); i++) {
+			Item tempItem = availableItems.get(i);
+			boolean itemChosen = false;
+			for (int j = 0; j < bags.size(); j++) {
+				Bag currentBag = bags.get(j);
+				int tempWeight = currentBag.getWeight() + tempItem.getWeight();
+				if(tempWeight<=Settings.WEIGHT_CAPACITY) {
+					currentBag.addItem(tempItem);
+					itemChosen = true;
+					indexOfBagChosen = j;
+					break; //no need to iterate the other bags on the same Item.
+				}
+			}
+			if(itemChosen) {
+				availableItems.remove(i);
+				knapsackView.updateBottomView(availableItems);
+				Item itemToAdd = bags.get(indexOfBagChosen).getItems().get(bags.get(indexOfBagChosen).getItems().size()-1);
+				knapsackView.addItemToKnapSack(indexOfBagChosen, itemToAdd);//get last item
+				break;		//We have placed one item, method should terminate.
+			}
+		}
+	}
+	
 	/**
 	 * Work in progress. Algorithm could be simplified. 
 	 * Sorts the item list in descending order based on rValue. Then items are picked one by one and placed into available bags until weight limit is reached.
 	 */
 	public void generateGreedySolution() {
 		ArrayList<Item> updatedAvailableItems = new ArrayList<>();
-		Collections.sort(availableItems);
 		for (int i = 0; i < availableItems.size(); i++) {
 			Item tempItem = availableItems.get(i);
 			boolean itemChosen = false;
 			for (int j = 0; j < bags.size(); j++) {
-				Bag tempBag = bags.get(j);
-				int tempWeight = tempBag.getWeight() + tempItem.getWeight();
+				Bag currentBag = bags.get(j);
+				int tempWeight = currentBag.getWeight() + tempItem.getWeight();
 				if(tempWeight<=Settings.WEIGHT_CAPACITY) {
-					tempBag.addItem(tempItem);
+					currentBag.addItem(tempItem);
 					itemChosen = true;
 					break; //no need to iterate the other bags on the same Item.
 				}

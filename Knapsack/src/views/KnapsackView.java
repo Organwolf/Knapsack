@@ -21,8 +21,9 @@ public class KnapsackView {
 	// the controller to the LeftView?
 	private KnapsackController controller;
 	
-	public KnapsackView(Stage primaryStage) {
+	public KnapsackView(Stage primaryStage, KnapsackController controller) {
 		this.primaryStage = primaryStage;
+		this.controller = controller;
 	}
 	public void initWindow() {
 		try {
