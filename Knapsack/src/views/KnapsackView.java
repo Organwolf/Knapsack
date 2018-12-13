@@ -17,6 +17,7 @@ public class KnapsackView {
 	private CenterView centerView;
 	private BottomView bottomView;
 	private LeftView leftView;
+	private RightView rightView;
 	// is this what I should instantiate to be able to send
 	// the controller to the LeftView?
 	private KnapsackController controller;
@@ -31,14 +32,16 @@ public class KnapsackView {
 			leftView = new LeftView(controller);
 			centerView = new CenterView();
 			bottomView = new BottomView();
+			rightView = new RightView(controller);
 			ScrollPane sp1 = new ScrollPane();
 			ScrollPane sp2 = new ScrollPane();
 			sp1.setContent(centerView);
 			sp2.setContent(bottomView);
 			root.setLeft(leftView);				// Left view for buttons
+			root.setRight(rightView);
 			root.setCenter(sp1);
 			root.setBottom(sp2);
-			Scene scene = new Scene(root,600,600);
+			Scene scene = new Scene(root,1000,1000);
 			scene.setFill(Color.ALICEBLUE);
 			primaryStage.setTitle("Knapsack Assignment");
 			primaryStage.setScene(scene);

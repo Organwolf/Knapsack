@@ -13,10 +13,7 @@ public class LeftView extends VBox{
 	
 	//input controller instance
 	public LeftView(KnapsackController controller) {
-		
-		// created when trying to incorporate the controller
 		this.controller = controller;
-		
 		initButtonsInVBox();
 	}
 
