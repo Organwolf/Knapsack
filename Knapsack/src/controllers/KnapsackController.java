@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import main.Settings;
 import pojos.Bag;
 import pojos.Item;
+import utilities.KnapsackHelper;
 import views.KnapsackView;
 
 // Controller class for the Knapsack
@@ -103,6 +104,7 @@ public class KnapsackController {
 			for (int j = 0; j < bags.get(i).getnbrOfItems(); j++) {
 				knapsackView.addItemToKnapSack(i, bags.get(i).getItems().get(j));
 			}
-		}		
+		}
+		System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 }
