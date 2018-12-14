@@ -27,7 +27,8 @@ public class KnapsackController {
 		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
 		generateDefaultItems();
-		generateGreedySolution();
+		generateStupidSolution();
+		//generateGreedySolution();
 		//generateItems();	
 	}
 	
@@ -117,7 +118,19 @@ public class KnapsackController {
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 		//System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
-
+	
+	public void generateStupidSolution() {
+		// Add the first item to the first bag and then remove it
+		Item firstItem = availableItems.get(0);
+		availableItems.remove(0);
+		Bag bag1 = bags.get(0);
+		bag1.addFirst(firstItem);
+		// Update view
+		knapsackView.updateBottomView(availableItems);
+		knapsackView.addItemToKnapSack(0, bags.get(0).getItems().get(0));
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+	}
+	
 	public void searchNeighborhood() {
 		// input variable = number of iterations?
 		
