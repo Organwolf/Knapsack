@@ -26,7 +26,8 @@ public class KnapsackController {
 		initBags();
 		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
-		generateItems();	
+		generateDefaultItems();
+		//generateItems();	
 	}
 	
 	private void initBags() {
@@ -34,6 +35,12 @@ public class KnapsackController {
 		for (int i = 0; i < Settings.NUMBER_OF_KNAPSACKS; i++) {
 			bags.add(new Bag());
 		}
+	}
+	
+	private void generateDefaultItems() {
+		availableItems = KnapsackHelper.generateDefaultItemList();
+		Collections.sort(availableItems);
+		knapsackView.updateBottomView(availableItems);
 	}
 	
 	private void generateItems() {
@@ -58,7 +65,7 @@ public class KnapsackController {
 				Bag currentBag = bags.get(j);
 				int tempWeight = currentBag.getWeight() + tempItem.getWeight();
 				if(tempWeight<=Settings.WEIGHT_CAPACITY) {
-					currentBag.addItem(tempItem);
+					currentBag.addLast(tempItem);
 					itemChosen = true;
 					indexOfBagChosen = j;
 					break; //no need to iterate the other bags on the same Item.
@@ -90,7 +97,7 @@ public class KnapsackController {
 				Bag currentBag = bags.get(j);
 				int tempWeight = currentBag.getWeight() + tempItem.getWeight();
 				if(tempWeight<=Settings.WEIGHT_CAPACITY) {
-					currentBag.addItem(tempItem);
+					currentBag.addLast(tempItem);
 					itemChosen = true;
 					break; //no need to iterate the other bags on the same Item.
 				}
@@ -109,4 +116,8 @@ public class KnapsackController {
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 		//System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
+	
+//	Bag currentBag = bags.get(0);
+//	int nbrOfItemsInBag = currentBag.getnbrOfItems();	
+//	currentBag.removeItem(nbrOfItemsInBag-1);
 }

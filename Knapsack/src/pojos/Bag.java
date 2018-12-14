@@ -41,18 +41,29 @@ public class Bag {
 	public int getnbrOfItems() {
 		return items.size();
 	}
-	public void addItem(Item item) {
+	public void addLast(Item item) {
 		this.items.add(item);
 		this.weight+=item.getWeight(); //Important!
 		this.value+=item.getValue();   //Important!
 		this.rvalue+=item.getrValue();
 	}
+	
+	public void addFirst(Item item) {
+		this.items.add(0, item);
+		this.weight+=item.getWeight(); //Important!
+		this.value+=item.getValue();   //Important!
+		this.rvalue+=item.getrValue();
+	}
+	
 	public void removeItem(int index) {
 		this.weight-=items.get(index).getWeight(); // Important
 		this.value-=items.get(index).getValue();   //Important!
 		this.rvalue-=items.get(index).getrValue();
 		this.items.remove(index);
-		
+	}
+	
+	public void removeLast(){
+		removeItem(getnbrOfItems()-1);
 	}
 	
 

@@ -2,7 +2,9 @@ package utilities;
 
 import java.util.ArrayList;
 
+import main.Settings;
 import pojos.Bag;
+import pojos.Item;
 
 public class KnapsackHelper {
 	
@@ -12,6 +14,18 @@ public class KnapsackHelper {
 			totalValue+=bags.get(i).getrValue();
 		}
 		return totalValue;
+	}
+	
+	public static ArrayList<Item> generateDefaultItemList(){
+		ArrayList<Item> items = new ArrayList<>();
+		items.add(new Item(9,3,9/3));
+		items.add(new Item(9,3,9/3));
+		items.add(new Item(30,10,30/10));
+		items.add(new Item(6,3,6/3));
+		items.add(new Item(6,3,6/3));
+		items.add(new Item(6,3,6/3));
+		items.add(new Item(6,3,6/3));
+		return items;
 	}
 
 }
