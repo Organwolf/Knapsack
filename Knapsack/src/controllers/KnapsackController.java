@@ -27,6 +27,7 @@ public class KnapsackController {
 		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
 		generateDefaultItems();
+		generateGreedySolution();
 		//generateItems();	
 	}
 	
@@ -115,6 +116,12 @@ public class KnapsackController {
 		}
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 		//System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+	}
+
+	public void searchNeighborgood() {
+		// insert logic for the neighborhood
+		System.out.println("Hello world");
+		
 	}
 	
 //	Bag currentBag = bags.get(0);
