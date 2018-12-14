@@ -17,7 +17,8 @@ public class RightView extends VBox {
 		this.getChildren().add(t1);
 		// use controller to get input?
 	}
-	public void setTextValue(int value){
-		t1.setText("Total value: "+String.valueOf(value));
+	public void setTextValue(float f){
+		System.out.println(f);
+		t1.setText("Total value: " + Float.toString(f));
 	}
 }

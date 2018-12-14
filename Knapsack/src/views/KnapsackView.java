@@ -59,8 +59,8 @@ public class KnapsackView {
 		bottomView.addAll(items, true);
 	}
 	
-	public void updateRightView(int value) {
-		rightView.setTextValue(value);
+	public void updateRightView(float f) {
+		rightView.setTextValue(f);
 	}
 
 }
