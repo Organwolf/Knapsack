@@ -118,13 +118,19 @@ public class KnapsackController {
 		//System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 
-	public void searchNeighborgood() {
+	public void searchNeighborhood() {
+		// input variable = number of iterations?
+		
 		// insert logic for the neighborhood
 		System.out.println("Hello world");
 		
+		// iterate set number of times
+			// iterate over the bags available
+				// ONE iteration
+				// check weight left and store that
+				// if possible add new items to the bag and break
+				// else remove the last item and add the new item
+				// store the removed item and repeat the process with the next bag
+
 	}
-	
-//	Bag currentBag = bags.get(0);
-//	int nbrOfItemsInBag = currentBag.getnbrOfItems();	
-//	currentBag.removeItem(nbrOfItemsInBag-1);
 }
