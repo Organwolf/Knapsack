@@ -72,6 +72,7 @@ public class KnapsackController {
 				break;		//We have placed one item, method should terminate.
 			}
 		}
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 	
 	/**
@@ -91,6 +92,7 @@ public class KnapsackController {
 				if(tempWeight<=Settings.WEIGHT_CAPACITY) {
 					currentBag.addItem(tempItem);
 					itemChosen = true;
+					knapsackView.addItemToKnapSack(j, tempItem);
 					break; //no need to iterate the other bags on the same Item.
 				}
 			}
@@ -100,11 +102,6 @@ public class KnapsackController {
 		}
 		availableItems = updatedAvailableItems; //the not picked items
 		knapsackView.updateBottomView(availableItems);
-		for (int i = 0; i < bags.size(); i++) {
-			for (int j = 0; j < bags.get(i).getnbrOfItems(); j++) {
-				knapsackView.addItemToKnapSack(i, bags.get(i).getItems().get(j));
-			}
-		}
-		System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 }
