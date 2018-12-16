@@ -134,53 +134,111 @@ public class KnapsackController {
 	
 	public void searchNeighborhood(int depth) {		
 		// insert logic for the neighborhood
-		int knapsacks = Settings.NUMBER_OF_KNAPSACKS;
-		Bag currentKnap;
-		int nbrOfItems;
-		int weightDiff;
-		Item currentItem;
+		Bag firstKnapsack = bags.get(0);
+		Bag secondKnapsack = bags.get(1);
+		int wDiff;
+		Item cItem;
+		Item nItem;
 		
 		// depth neightborhood search
 		for (int i = 0; i < depth; i++) {
-			for (int j = 0; j < 1; j++) {			// for each bag
-				currentKnap = bags.get(j);
-				nbrOfItems = availableItems.size();
-				weightDiff = Settings.WEIGHT_CAPACITY - currentKnap.getWeight();
+				System.out.println(availableItems.toString());
+				System.out.println(firstKnapsack.toString());
+				System.out.println(secondKnapsack.toString());
 				
-
-				if(!availableItems.isEmpty()) {
-					System.out.println(availableItems.toString());
-					currentItem = availableItems.get(0);
-					
-					// add item
-					if(currentItem.getWeight() < weightDiff) {
-						currentKnap.addFirst(currentItem);
-						availableItems.remove(0);
+				//pick last added item
+				cItem = firstKnapsack.getLastItem();
+				firstKnapsack.removeLast();
+				
+				// check if cItem fits in the second knapsack
+				wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
+				
+				// if not remove item(s) in second knapsack
+				while (wDiff < cItem.getWeight()) {
+					nItem = secondKnapsack.getLastItem();
+					secondKnapsack.removeLast();
+					availableItems.add(nItem);
+					wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
+				}
+				
+				// while there is room fill the second knapsack up
+				while (wDiff > cItem.getWeight()) {
+					secondKnapsack.addFirst(cItem);
+					wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
+					if(!firstKnapsack.getItems().isEmpty()) {
+						cItem = firstKnapsack.getLastItem();
+						firstKnapsack.removeLast();
 					}
-					// remove and add item
 					else {
-						if (!currentKnap.getItems().isEmpty()) {
-							// and don't want to just remove it 
-							// I alsa want to return it to the available items!!
-							currentKnap.removeLast();
-						}
+						break;
 					}
+				}
+				
+				// pick the next available item
+				if (!availableItems.isEmpty()) {
+					cItem = availableItems.get(0);
+					wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
+				}
+				else {
+					wDiff = Settings.WEIGHT_CAPACITY;
+				}
+				
+				// fill the first knapsack up again if needed/possible
+				while (wDiff > cItem.getWeight()) {
+					availableItems.remove(0);
+					firstKnapsack.addFirst(cItem);				
+					wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
+					if (!availableItems.isEmpty()) {
+						cItem = availableItems.get(0);
+						wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
+					}
+					else {
+						break;
+					}
+				}
+				
+				System.out.println("Weight first knapsack: " + firstKnapsack.getWeight());
+				System.out.println("Weight second knapsack: " + secondKnapsack.getWeight());
+				System.out.println("R value first knapsack: " + firstKnapsack.getrValue());
+				System.out.println("R value second knapsack: " + secondKnapsack.getrValue());
+				System.out.println(availableItems.toString());
+				System.out.println("First bag: " + firstKnapsack.toString());
+				System.out.println("Second bag: " + secondKnapsack.toString());
+				
+				// om nuvarande relative weight är större än det störta so far spara undan denna lösningen.
+				// antingen som relative weight eller som vad knapsacken faktiskt innehöll med toString
+				
+//				if(!availableItems.isEmpty()) {
+//					System.out.println(availableItems.toString());
+//					currentItem = availableItems.get(0);
+//					
+//					// add item
+//					if(currentItem.getWeight() < weightDiff) {
+//						currentKnap.addFirst(currentItem);
+//						availableItems.remove(0);
+//					}
+//					// remove and add item
+//					else {
+//						if (!currentKnap.getItems().isEmpty()) {
+//							// and don't want to just remove it 
+//							// I alsa want to return it to the available items!!
+//							currentKnap.removeLast();
+//						}
+//					}
 					
 					
 					// Update view
-					knapsackView.clearAllViews();
-					for(int p=0;p<currentKnap.getnbrOfItems();p++) {
-						knapsackView.addItemToKnapSack(0, bags.get(0).getItems().get(p));
-					}
-					knapsackView.updateBottomView(availableItems);
-					
-					knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+//					knapsackView.clearAllViews();
+//					for(int p=0;p<currentKnap.getnbrOfItems();p++) {
+//						knapsackView.addItemToKnapSack(0, bags.get(0).getItems().get(p));
+//					}
+//					knapsackView.updateBottomView(availableItems);
+//					
+//					knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 				}
 				//System.out.println(currentKnap.toString());
 				
 				// else remove the last item and add the new item
-				// store the removed item and repeat the process with the next bag
-			}			
-		}
+				// store the removed item and repeat the process with the next bag		
 	}
 }

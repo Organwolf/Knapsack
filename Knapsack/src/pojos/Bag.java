@@ -70,5 +70,9 @@ public class Bag {
 		removeItem(getnbrOfItems()-1);
 	}
 	
+	public Item getLastItem() {
+		return items.get(getnbrOfItems()-1);
+	}
+	
 
 }
