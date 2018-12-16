@@ -132,82 +132,81 @@ public class KnapsackController {
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 	
-	public void searchNeighborhood(int depth) {		
-		// insert logic for the neighborhood
+	public void searchNeighborhood(int neighbors) {	
 		Bag firstKnapsack = bags.get(0);
 		Bag secondKnapsack = bags.get(1);
+		Item currentItem;
+		Item nextItem;
 		int wDiff;
-		Item cItem;
-		Item nItem;
-		
-		// depth neightborhood search
-		for (int i = 0; i < depth; i++) {
-				System.out.println(availableItems.toString());
-				System.out.println(firstKnapsack.toString());
-				System.out.println(secondKnapsack.toString());
+		float bestRelative = 0;
+		float currentRelative;
+			
+		// number of neighbors created/checked
+		for (int neighbor = 0; neighbor < neighbors; neighbor++) {
 				
-				//pick last added item
-				cItem = firstKnapsack.getLastItem();
-				firstKnapsack.removeLast();
-				
-				// check if cItem fits in the second knapsack
-				wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
-				
-				// if not remove item(s) in second knapsack
-				while (wDiff < cItem.getWeight()) {
-					nItem = secondKnapsack.getLastItem();
-					secondKnapsack.removeLast();
-					availableItems.add(nItem);
+				// check if first knapsack has items
+				if (!firstKnapsack.getItems().isEmpty()) {
+					currentItem = firstKnapsack.getLastItem();
+					
+					// calculate weight cap. left in second knapsack
 					wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
-				}
-				
-				// while there is room fill the second knapsack up
-				while (wDiff > cItem.getWeight()) {
-					secondKnapsack.addFirst(cItem);
-					wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
-					if(!firstKnapsack.getItems().isEmpty()) {
-						cItem = firstKnapsack.getLastItem();
-						firstKnapsack.removeLast();
+					
+					// check if currentItem fits in the second knapsack
+					// if not remove item(s) in second knapsack
+					while (wDiff < currentItem.getWeight()) {
+						nextItem = secondKnapsack.getLastItem();
+						secondKnapsack.removeLast();
+						availableItems.add(nextItem);
+						wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
 					}
-					else {
-						break;
+					
+					// while there is room fill the second knapsack up
+					while (wDiff >= currentItem.getWeight()) {
+						secondKnapsack.addFirst(currentItem);
+						firstKnapsack.removeLast();
+						wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
+						if(!firstKnapsack.getItems().isEmpty()) {
+							currentItem = firstKnapsack.getLastItem();
+						}
+						else {
+							break;
+						}
 					}
 				}
 				
 				// pick the next available item
-				if (!availableItems.isEmpty()) {
-					cItem = availableItems.get(0);
+				if (!availableItems.isEmpty()) {					
+					currentItem = availableItems.get(0);
 					wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
-				}
-				else {
-					wDiff = Settings.WEIGHT_CAPACITY;
-				}
 				
-				// fill the first knapsack up again if needed/possible
-				while (wDiff > cItem.getWeight()) {
-					availableItems.remove(0);
-					firstKnapsack.addFirst(cItem);				
-					wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
-					if (!availableItems.isEmpty()) {
-						cItem = availableItems.get(0);
+					// fill the first knapsack if needed/possible
+					while (wDiff >= currentItem.getWeight()) {
+						availableItems.remove(0);
+						firstKnapsack.addFirst(currentItem);	
 						wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
-					}
-					else {
-						break;
+						if (!availableItems.isEmpty()) {
+							currentItem = availableItems.get(0);
+							wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
+						}
+						else {
+							break;
+						}
 					}
 				}
-				
-				System.out.println("Weight first knapsack: " + firstKnapsack.getWeight());
-				System.out.println("Weight second knapsack: " + secondKnapsack.getWeight());
-				System.out.println("R value first knapsack: " + firstKnapsack.getrValue());
-				System.out.println("R value second knapsack: " + secondKnapsack.getrValue());
-				System.out.println(availableItems.toString());
-				System.out.println("First bag: " + firstKnapsack.toString());
-				System.out.println("Second bag: " + secondKnapsack.toString());
-				
-				// om nuvarande relative weight är större än det störta so far spara undan denna lösningen.
-				// antingen som relative weight eller som vad knapsacken faktiskt innehöll med toString
-				
+
+				// check current relative against current best
+				currentRelative = firstKnapsack.getrValue()+secondKnapsack.getrValue();
+				if (bestRelative < currentRelative) {
+					bestRelative = currentRelative;											// should I save away the bags?
+				}			
+		}
+		
+		// print best relative after iterating through neighbors
+		System.out.println("Best relative value in this neighborhood: "+bestRelative);
+		
+		// needs more testing
+		// consider adding the GUI at this point
+		
 //				if(!availableItems.isEmpty()) {
 //					System.out.println(availableItems.toString());
 //					currentItem = availableItems.get(0);
@@ -235,7 +234,7 @@ public class KnapsackController {
 //					knapsackView.updateBottomView(availableItems);
 //					
 //					knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
-				}
+
 				//System.out.println(currentKnap.toString());
 				
 				// else remove the last item and add the new item
