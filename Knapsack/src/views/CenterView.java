@@ -10,6 +10,7 @@ public class CenterView extends HBox{
 	} 
 	
 	private void initBagsInHBox() {
+		this.getChildren().clear();
 		int nbrOfBags = Settings.NUMBER_OF_KNAPSACKS;
 		for (int i = 0; i < nbrOfBags; i++) {
 			this.getChildren().add(new BagView("Knapsack "+ String.valueOf(i)));
@@ -19,6 +20,10 @@ public class CenterView extends HBox{
 	public void addItemToKnapSack(int bagIndex, Item item) {
 		BagView bagView = (BagView) this.getChildren().get(bagIndex);
 		bagView.addItem(item);
+	}
+	
+	public void removeAllItemsInBag() {
+		initBagsInHBox();
 	}
 
 }

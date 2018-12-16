@@ -27,8 +27,8 @@ public class KnapsackController {
 		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
 		generateDefaultItems();
-		generateStupidSolution();
-		//generateGreedySolution();
+		//generateStupidSolution();
+		generateGreedySolution();
 		//generateItems();	
 	}
 	
@@ -52,7 +52,7 @@ public class KnapsackController {
 			int value = rand.nextInt(5)+1;
 			int weight = rand.nextInt(5)+1;
 			float rValue = (float)value/weight;
-			availableItems.add(new Item(value, weight, rValue));
+			availableItems.add(new Item(i+1,value, weight, rValue));
 		}
 		Collections.sort(availableItems);
 		knapsackView.updateBottomView(availableItems);
@@ -125,25 +125,62 @@ public class KnapsackController {
 		availableItems.remove(0);
 		Bag bag1 = bags.get(0);
 		bag1.addFirst(firstItem);
+		System.out.println(bag1.getWeight());
 		// Update view
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.addItemToKnapSack(0, bags.get(0).getItems().get(0));
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 	
-	public void searchNeighborhood() {
-		// input variable = number of iterations?
-		
+	public void searchNeighborhood(int depth) {		
 		// insert logic for the neighborhood
-		System.out.println("Hello world");
+		int knapsacks = Settings.NUMBER_OF_KNAPSACKS;
+		Bag currentKnap;
+		int nbrOfItems;
+		int weightDiff;
+		Item currentItem;
 		
-		// iterate set number of times
-			// iterate over the bags available
-				// ONE iteration
-				// check weight left and store that
-				// if possible add new items to the bag and break
+		// depth neightborhood search
+		for (int i = 0; i < depth; i++) {
+			for (int j = 0; j < 1; j++) {			// for each bag
+				currentKnap = bags.get(j);
+				nbrOfItems = availableItems.size();
+				weightDiff = Settings.WEIGHT_CAPACITY - currentKnap.getWeight();
+				
+
+				if(!availableItems.isEmpty()) {
+					System.out.println(availableItems.toString());
+					currentItem = availableItems.get(0);
+					
+					// add item
+					if(currentItem.getWeight() < weightDiff) {
+						currentKnap.addFirst(currentItem);
+						availableItems.remove(0);
+					}
+					// remove and add item
+					else {
+						if (!currentKnap.getItems().isEmpty()) {
+							// and don't want to just remove it 
+							// I alsa want to return it to the available items!!
+							currentKnap.removeLast();
+						}
+					}
+					
+					
+					// Update view
+					knapsackView.clearAllViews();
+					for(int p=0;p<currentKnap.getnbrOfItems();p++) {
+						knapsackView.addItemToKnapSack(0, bags.get(0).getItems().get(p));
+					}
+					knapsackView.updateBottomView(availableItems);
+					
+					knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+				}
+				//System.out.println(currentKnap.toString());
+				
 				// else remove the last item and add the new item
 				// store the removed item and repeat the process with the next bag
-
+			}			
+		}
 	}
 }

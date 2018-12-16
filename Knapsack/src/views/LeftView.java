@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import main.Settings;
 
 public class LeftView extends VBox{
 	private Button solveBtn;
@@ -30,7 +31,7 @@ public class LeftView extends VBox{
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
             { 
-                controller.searchNeighborhood();
+                controller.searchNeighborhood(Settings.NEIGHBOR_ITERATIONS);
             } 
         };
         solveBtn.setOnAction(event1);
@@ -45,5 +46,7 @@ public class LeftView extends VBox{
         stepBtn.setOnAction(event2);
         
 	}
+	
+	
 
 }

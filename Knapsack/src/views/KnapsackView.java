@@ -41,7 +41,7 @@ public class KnapsackView {
 			root.setRight(rightView);
 			root.setCenter(sp1);
 			root.setBottom(sp2);
-			Scene scene = new Scene(root,1000,1000);
+			Scene scene = new Scene(root,600,400);
 			scene.setFill(Color.ALICEBLUE);
 			primaryStage.setTitle("Knapsack Assignment");
 			primaryStage.setScene(scene);
@@ -61,6 +61,11 @@ public class KnapsackView {
 	
 	public void updateRightView(float f) {
 		rightView.setTextValue(f);
+	}
+	
+	public void clearAllViews() {
+		centerView.removeAllItemsInBag();
+		bottomView.removeAllItems();
 	}
 
 }
