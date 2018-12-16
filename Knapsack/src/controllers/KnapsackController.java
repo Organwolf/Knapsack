@@ -186,16 +186,16 @@ public class KnapsackController {
 						wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
 						if (!availableItems.isEmpty()) {
 							currentItem = availableItems.get(0);
-							wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
 						}
 						else {
 							break;
 						}
 					}
 				}
-
+				
 				// check current relative against current best
 				currentRelative = firstKnapsack.getrValue()+secondKnapsack.getrValue();
+				System.out.println(currentRelative);
 				if (bestRelative < currentRelative) {
 					bestRelative = currentRelative;											// should I save away the bags?
 				}			
