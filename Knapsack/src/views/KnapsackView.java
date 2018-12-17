@@ -55,6 +55,15 @@ public class KnapsackView {
 		centerView.addItemToKnapSack(bagIndex, item);
 	}
 	
+	public void updateKnapSacks(ArrayList<Bag> bags) {
+		centerView.removeAllItemsInBags();
+		for (int i = 0; i < bags.size(); i++) {
+			for (int j = 0; j < bags.get(i).getnbrOfItems(); j++) {
+				centerView.addItemToKnapSack(i, bags.get(i).getItems().get(j));
+			}
+		}
+	}
+	
 	public void updateBottomView(ArrayList<Item> items) {
 		bottomView.addAll(items, true);
 	}
@@ -64,7 +73,7 @@ public class KnapsackView {
 	}
 	
 	public void clearAllViews() {
-		centerView.removeAllItemsInBag();
+		centerView.removeAllItemsInBags();
 		bottomView.removeAllItems();
 	}
 

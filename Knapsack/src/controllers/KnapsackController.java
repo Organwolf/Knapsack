@@ -13,6 +13,7 @@ import main.Settings;
 import pojos.Bag;
 import pojos.Item;
 import utilities.KnapsackHelper;
+import views.CenterView;
 import views.KnapsackView;
 
 // Controller class for the Knapsack
@@ -26,10 +27,10 @@ public class KnapsackController {
 		initBags();
 		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
-		generateDefaultItems();
+		//generateDefaultItems();
+		generateRandomItems();	
 		//generateStupidSolution();
-		generateGreedySolution();
-		//generateItems();	
+		//generateGreedySolution();
 	}
 	
 	private void initBags() {
@@ -45,16 +46,9 @@ public class KnapsackController {
 		knapsackView.updateBottomView(availableItems);
 	}
 	
-	private void generateItems() {
-		Random rand = new Random();
-		availableItems = new ArrayList<>();
-		for (int i = 0; i < Settings.NUMBER_OF_ITEMS; i++) {
-			int value = rand.nextInt(5)+1;
-			int weight = rand.nextInt(5)+1;
-			float rValue = (float)value/weight;
-			availableItems.add(new Item(i+1,value, weight, rValue));
-		}
-		Collections.sort(availableItems);
+	private void generateRandomItems() {
+		availableItems = KnapsackHelper.generateRandomItemList();
+		//Collections.sort(availableItems);
 		knapsackView.updateBottomView(availableItems);
 	}
 	
@@ -132,7 +126,7 @@ public class KnapsackController {
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 	
-	public void searchNeighborhood(int neighbors) {	
+	public void searchNeighborhood(int neighbors) {
 		Bag firstKnapsack = bags.get(0);
 		Bag secondKnapsack = bags.get(1);
 		Item currentItem;
@@ -203,6 +197,7 @@ public class KnapsackController {
 		
 		// print best relative after iterating through neighbors
 		System.out.println("Best relative value in this neighborhood: "+bestRelative);
+		knapsackView.updateKnapSacks(bags);
 		
 		// needs more testing
 		// consider adding the GUI at this point
@@ -239,5 +234,22 @@ public class KnapsackController {
 				
 				// else remove the last item and add the new item
 				// store the removed item and repeat the process with the next bag		
+	}
+	
+	public void searchNh() {
+		//for (int i = 0; i < Settings.NEIGHBOR_ITERATIONS; i++) {
+			//skapa arraylist kopia av bags genom deep copy
+			ArrayList<Bag> tempBags = KnapsackHelper.getBagListCopy(bags);
+			//skapa arraylist kopia av items genom deep copy
+			ArrayList<Item> tempItems = KnapsackHelper.getItemListCopy(availableItems);
+			availableItems.get(0).setValue(100);
+			for (int i = 0; i < availableItems.size(); i++) {
+				System.out.println("original value: " + availableItems.get(i).getValue());
+			}
+			for (int i = 0; i < tempItems.size(); i++) {
+				System.out.println("copy value: " + tempItems.get(i).getValue());
+			}//I was here!
+			
+		//}
 	}
 }

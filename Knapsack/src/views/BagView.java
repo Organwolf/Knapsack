@@ -7,8 +7,10 @@ import javafx.scene.text.Text;
 import pojos.Item;
 
 public class BagView extends VBox{
+	private String bagName;
 	
 	public BagView(String bagName) {
+		this.bagName = bagName;
 	    //10/10 design!
 	    String cssLayout = "-fx-border-color: red;\n" +
                 "-fx-border-insets: 5;\n" +
@@ -16,7 +18,7 @@ public class BagView extends VBox{
                 "-fx-border-style: dashed;\n";
 	    this.setStyle(cssLayout);
 	    
-		Text title = new Text(bagName);
+		Text title = new Text(this.bagName);
 	    title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 	    this.getChildren().add(title);
 	}
@@ -29,6 +31,15 @@ public class BagView extends VBox{
 	
 	public void removeAllItems() {
 		this.getChildren().clear(); //Clear all childrenNodes.
+		String cssLayout = "-fx-border-color: red;\n" +
+                "-fx-border-insets: 5;\n" +
+                "-fx-border-width: 3;\n" +
+                "-fx-border-style: dashed;\n";
+	    this.setStyle(cssLayout);
+	    
+		Text title = new Text(bagName);
+	    title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+	    this.getChildren().add(title);
 	}
 
 }

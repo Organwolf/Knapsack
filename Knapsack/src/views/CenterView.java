@@ -22,8 +22,11 @@ public class CenterView extends HBox{
 		bagView.addItem(item);
 	}
 	
-	public void removeAllItemsInBag() {
-		initBagsInHBox();
+	public void removeAllItemsInBags() {
+		for (int i = 0; i < Settings.NUMBER_OF_KNAPSACKS; i++) {
+			BagView bagView = (BagView) this.getChildren().get(i);
+			bagView.removeAllItems();
+		}
 	}
 
 }

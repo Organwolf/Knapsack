@@ -39,9 +39,9 @@ public class Bag {
 	public String toString() {
 		return "Bag [items=" + items.toString() + ", weight=" + weight + ", value=" + value + ", rvalue=" + rvalue + "]";
 	}
-	//	public void setItems(ArrayList<Item> items) {
-//		this.items = items;
-//	}
+	public void setItems(ArrayList<Item> items) {
+		this.items = items;
+	}
 	public int getnbrOfItems() {
 		return items.size();
 	}
