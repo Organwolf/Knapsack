@@ -35,12 +35,22 @@ public class Bag {
 	public ArrayList<Item> getItems() {
 		return items;
 	}
+	public void setItems(ArrayList<Item> items) {
+		this.items = items;
+	}
+	public void setItem(int index, Item item) {
+		items.set(index, item);
+		this.weight+=item.getWeight(); //Important!
+		this.value+=item.getValue();   //Important!
+		this.rvalue+=item.getrValue();
+	}
+	
+	public Item getItem(int index) {
+		return items.get(index);
+	}
 @Override
 	public String toString() {
 		return "Bag [items=" + items.toString() + ", weight=" + weight + ", value=" + value + ", rvalue=" + rvalue + "]";
-	}
-	public void setItems(ArrayList<Item> items) {
-		this.items = items;
 	}
 	public int getnbrOfItems() {
 		return items.size();
@@ -59,11 +69,11 @@ public class Bag {
 		this.rvalue+=item.getrValue();
 	}
 	
-	public void removeItem(int index) {
+	public Item removeItem(int index) {
 		this.weight-=items.get(index).getWeight(); // Important
 		this.value-=items.get(index).getValue();   //Important!
 		this.rvalue-=items.get(index).getrValue();
-		this.items.remove(index);
+		return this.items.remove(index);
 	}
 	
 	public void removeLast(){

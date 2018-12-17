@@ -13,6 +13,7 @@ import main.Settings;
 import pojos.Bag;
 import pojos.Item;
 import utilities.KnapsackHelper;
+import views.BottomView;
 import views.CenterView;
 import views.KnapsackView;
 
@@ -24,11 +25,11 @@ public class KnapsackController {
 	private ArrayList<Item> availableItems;
 	
 	public KnapsackController(Stage primaryStage) {
-		initBags();
 		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
-		//generateDefaultItems();
-		generateRandomItems();	
+		generateDefaultItems();
+		initBags();
+		//generateRandomItems();	
 		//generateStupidSolution();
 		//generateGreedySolution();
 	}
@@ -38,11 +39,17 @@ public class KnapsackController {
 		for (int i = 0; i < Settings.NUMBER_OF_KNAPSACKS; i++) {
 			bags.add(new Bag());
 		}
+		bags.get(0).addFirst(availableItems.get(0));
+		bags.get(1).addFirst(availableItems.get(1));
+		availableItems.remove(0);
+		availableItems.remove(0);
+		knapsackView.updateKnapSacks(bags);
+		knapsackView.updateBottomView(availableItems);
 	}
 	
 	private void generateDefaultItems() {
 		availableItems = KnapsackHelper.generateDefaultItemList();
-		Collections.sort(availableItems);
+		//Collections.sort(availableItems);
 		knapsackView.updateBottomView(availableItems);
 	}
 	
@@ -75,7 +82,7 @@ public class KnapsackController {
 				break;		//We have placed one item, method should terminate.
 			}
 		}
-		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+		knapsackView.updateRightView(KnapsackHelper.getrValueAcrossAllKnapsacks(bags));
 	}
 	
 	/**
@@ -109,7 +116,7 @@ public class KnapsackController {
 				knapsackView.addItemToKnapSack(i, bags.get(i).getItems().get(j));
 			}
 		}
-		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+		knapsackView.updateRightView(KnapsackHelper.getrValueAcrossAllKnapsacks(bags));
 		//System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 	
@@ -123,7 +130,7 @@ public class KnapsackController {
 		// Update view
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.addItemToKnapSack(0, bags.get(0).getItems().get(0));
-		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+		knapsackView.updateRightView(KnapsackHelper.getrValueAcrossAllKnapsacks(bags));
 	}
 	
 	public void searchNeighborhood(int neighbors) {
@@ -251,5 +258,44 @@ public class KnapsackController {
 			}//I was here!
 			
 		//}
+	}
+	
+	public void oneByOneSearch() {
+		for (int i = 0; i < availableItems.size(); i++) {
+			float bestDiff = 0;
+			int swapBagIndex = -1;
+			int swapBagItemIndex = -1;
+			Item itemToInsert = availableItems.get(i);
+			for (int j = 0; j < bags.size(); j++) {
+				Bag tempBag  = bags.get(j);
+				for (int k = 0; k < tempBag.getnbrOfItems(); k++) {
+					//swap items i and k in bag j. 
+					//If possible + better solution. update best.
+					Item currentItem = tempBag.getItems().get(k);
+					float currentDiff = itemToInsert.getrValue() - currentItem.getrValue();
+					if (currentDiff > bestDiff) {
+						int totalWeight = tempBag.getWeight() + itemToInsert.getWeight() - currentItem.getWeight();
+						if (totalWeight<=Settings.WEIGHT_CAPACITY) {
+							swapBagIndex = j;
+							swapBagItemIndex = k;
+							bestDiff = currentDiff;
+						}
+					}				
+				}
+			}
+			if(!(swapBagIndex==-1)) {
+				Bag bagToBeModified = bags.get(swapBagIndex);
+				Item itemTobeRemoved = bagToBeModified.removeItem(swapBagItemIndex);
+				//bagToBeModified.addItem(swapBagItemIndex, itemToInsert);
+				bagToBeModified.addFirst(itemToInsert);
+				availableItems.set(i, itemTobeRemoved);
+			}
+			
+		}
+		for (int p = 0; p < bags.size(); p++) {
+			System.out.println(bags.get(p).toString());
+		}
+		knapsackView.updateBottomView(availableItems);
+		knapsackView.updateKnapSacks(bags);
 	}
 }

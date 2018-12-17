@@ -9,7 +9,7 @@ import pojos.Item;
 
 public class KnapsackHelper {
 	
-	public static float getValueAcrossAllKnapsacks(ArrayList<Bag> bags) {
+	public static float getrValueAcrossAllKnapsacks(ArrayList<Bag> bags) {
 		float totalValue = 0;
 		for (int i = 0; i < bags.size(); i++) {
 			totalValue+=bags.get(i).getrValue();
@@ -31,13 +31,13 @@ public class KnapsackHelper {
 	
 	public static ArrayList<Item> generateDefaultItemList(){
 		ArrayList<Item> items = new ArrayList<>();
-		items.add(new Item(1,9,3,9/3));
-		items.add(new Item(2,9,3,9/3));
-		items.add(new Item(3,30,10,30/10));
-		items.add(new Item(4,6,3,6/3));
-		items.add(new Item(5,6,3,6/3));
-		items.add(new Item(6,6,3,6/3));
-		items.add(new Item(7,6,3,6/3));
+		items.add(new Item(1,1,1,1/1));
+		items.add(new Item(2,2,1,2/1));
+		items.add(new Item(3,3,1,3/1));
+		items.add(new Item(4,4,1,4/1));
+		items.add(new Item(5,5,1,5/1));
+		items.add(new Item(6,6,1,6/1));
+		items.add(new Item(7,7,1,7/1));
 		return items;
 	}
 
