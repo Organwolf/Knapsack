@@ -27,11 +27,11 @@ public class KnapsackController {
 	public KnapsackController(Stage primaryStage) {
 		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
-		generateDefaultItems();
-		initBags();
-		//generateRandomItems();	
+		//generateDefaultItems();
+		generateRandomItems();
+		initBags();	
 		//generateStupidSolution();
-		//generateGreedySolution();
+		generateGreedySolution();
 	}
 	
 	private void initBags() {
@@ -39,12 +39,6 @@ public class KnapsackController {
 		for (int i = 0; i < Settings.NUMBER_OF_KNAPSACKS; i++) {
 			bags.add(new Bag());
 		}
-		bags.get(0).addFirst(availableItems.get(0));
-		bags.get(1).addFirst(availableItems.get(1));
-		availableItems.remove(0);
-		availableItems.remove(0);
-		knapsackView.updateKnapSacks(bags);
-		knapsackView.updateBottomView(availableItems);
 	}
 	
 	private void generateDefaultItems() {
@@ -55,7 +49,7 @@ public class KnapsackController {
 	
 	private void generateRandomItems() {
 		availableItems = KnapsackHelper.generateRandomItemList();
-		//Collections.sort(availableItems);
+		Collections.sort(availableItems);
 		knapsackView.updateBottomView(availableItems);
 	}
 	
@@ -297,5 +291,6 @@ public class KnapsackController {
 		}
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.updateKnapSacks(bags);
+		knapsackView.updateRightView(KnapsackHelper.getrValueAcrossAllKnapsacks(bags));
 	}
 }
