@@ -110,7 +110,7 @@ public class KnapsackController {
 				knapsackView.addItemToKnapSack(i, bags.get(i).getItems().get(j));
 			}
 		}
-		knapsackView.updateRightView(KnapsackHelper.getrValueAcrossAllKnapsacks(bags));
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 		// System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 
@@ -197,41 +197,6 @@ public class KnapsackController {
 		// print best relative after iterating through neighbors
 		System.out.println("Best relative value in this neighborhood: " + bestRelative);
 		knapsackView.updateKnapSacks(bags);
-
-		// needs more testing
-		// consider adding the GUI at this point
-
-//				if(!availableItems.isEmpty()) {
-//					System.out.println(availableItems.toString());
-//					currentItem = availableItems.get(0);
-//					
-//					// add item
-//					if(currentItem.getWeight() < weightDiff) {
-//						currentKnap.addFirst(currentItem);
-//						availableItems.remove(0);
-//					}
-//					// remove and add item
-//					else {
-//						if (!currentKnap.getItems().isEmpty()) {
-//							// and don't want to just remove it 
-//							// I alsa want to return it to the available items!!
-//							currentKnap.removeLast();
-//						}
-//					}
-
-		// Update view
-//					knapsackView.clearAllViews();
-//					for(int p=0;p<currentKnap.getnbrOfItems();p++) {
-//						knapsackView.addItemToKnapSack(0, bags.get(0).getItems().get(p));
-//					}
-//					knapsackView.updateBottomView(availableItems);
-//					
-//					knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
-
-		// System.out.println(currentKnap.toString());
-
-		// else remove the last item and add the new item
-		// store the removed item and repeat the process with the next bag
 	}
 
 	public void searchNh() {
@@ -250,7 +215,7 @@ public class KnapsackController {
 
 		// }
 	}
-
+	
 	public void oneByOneSearch() {
 		for (int i = 0; i < availableItems.size(); i++) {
 			float bestDiff = 0;
@@ -263,7 +228,7 @@ public class KnapsackController {
 					// swap items i and k in bag j.
 					// If possible + better solution. update best.
 					Item currentItem = tempBag.getItems().get(k);
-					float currentDiff = itemToInsert.getrValue() - currentItem.getrValue();
+					float currentDiff = itemToInsert.getValue() - currentItem.getValue();
 					if (currentDiff > bestDiff) {
 						int totalWeight = tempBag.getWeight() + itemToInsert.getWeight() - currentItem.getWeight();
 						if (totalWeight <= Settings.WEIGHT_CAPACITY) {
@@ -283,12 +248,12 @@ public class KnapsackController {
 			}
 
 		}
-		for (int p = 0; p < bags.size(); p++) {
-			System.out.println(bags.get(p).toString());
-		}
+//		for (int p = 0; p < bags.size(); p++) {
+//			System.out.println(bags.get(p).toString());
+//		}
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.updateKnapSacks(bags);
-		knapsackView.updateRightView(KnapsackHelper.getrValueAcrossAllKnapsacks(bags));
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 
 	public void oneByTwoSearch() {
@@ -336,6 +301,6 @@ public class KnapsackController {
 		}
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.updateKnapSacks(bags);
-		knapsackView.updateRightView(KnapsackHelper.getrValueAcrossAllKnapsacks(bags));
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 }
