@@ -125,8 +125,6 @@ public class KnapsackController {
 			for (int j = 0; j < bags.size(); j++) {
 				Bag tempBag = bags.get(j);
 				for (int k = 0; k < tempBag.getnbrOfItems(); k++) {
-					// swap items i and k in bag j.
-					// If possible + better solution. update best.
 					Item currentItem = tempBag.getItems().get(k);
 					float currentDiff = itemToInsert.getValue() - currentItem.getValue();
 					if (currentDiff > bestDiff) {
@@ -145,7 +143,6 @@ public class KnapsackController {
 				bagToBeModified.addFirst(itemToInsert);
 				availableItems.set(i, itemTobeRemoved);
 			}
-
 		}
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.updateKnapSacks(bags);
@@ -166,8 +163,6 @@ public class KnapsackController {
 				for (int j = 0; j < bags.size(); j++) {
 					Bag tempBag = bags.get(j);
 					for (int k = 0; k < tempBag.getnbrOfItems(); k++) {
-						// swap items i and k in bag j.
-						// If possible + better solution. update best.
 						Item currentItem = tempBag.getItems().get(k);
 						float currentDiff = itemToInsert1.getValue() + itemToInsert2.getValue() - currentItem.getValue();
 						if (currentDiff > bestDiff) {
@@ -252,7 +247,6 @@ public class KnapsackController {
 				availableItems.add(itemTobeRemoved2);
 			}
 		}
-
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.updateKnapSacks(bags);
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));

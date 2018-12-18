@@ -1,15 +1,12 @@
 package views;
 
-import controllers.KnapsackController;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 public class RightView extends VBox {
-	private KnapsackController controller;
 	private Text t1;
 	
-	public RightView(KnapsackController controller) {
-		this.controller = controller;
+	public RightView() {
 		initTextRight();
 	}
 	private void initTextRight() {

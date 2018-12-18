@@ -28,7 +28,7 @@ public class KnapsackView {
 			leftView = new LeftView(controller);
 			centerView = new CenterView();
 			bottomView = new BottomView();
-			rightView = new RightView(controller);
+			rightView = new RightView();
 			ScrollPane sp1 = new ScrollPane();
 			ScrollPane sp2 = new ScrollPane();
 			sp1.setContent(centerView);
