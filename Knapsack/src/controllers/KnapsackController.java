@@ -27,8 +27,8 @@ public class KnapsackController {
 	public KnapsackController(Stage primaryStage) {
 		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
-		//generateDefaultItems();
-		generateRandomItems();
+		generateDefaultItems();
+		//generateRandomItems();
 		initBags();
 		// generateStupidSolution();
 		generateGreedySolution();
@@ -294,12 +294,15 @@ public class KnapsackController {
 	public void oneByTwoSearch() {
 		int availIndex1 = 0;
 		int availIndex2 = 0;
+		
 		for (int i = 0; i < availableItems.size(); i++) {
+			if(availableItems.get(i)==null) continue;
 			Item itemToInsert1 = availableItems.get(i);
 			float bestDiff = 0;
 			int swapBagIndex = -1;
 			int swapBagItemIndex = -1;
 			for (int i2 = i+1; i2 < availableItems.size(); i2++) {
+				if(availableItems.get(i2)==null) continue;
 				Item itemToInsert2 = availableItems.get(i2);
 				for (int j = 0; j < bags.size(); j++) {
 					Bag tempBag = bags.get(j);
@@ -327,12 +330,23 @@ public class KnapsackController {
 				// bagToBeModified.addItem(swapBagItemIndex, itemToInsert);
 				bagToBeModified.addFirst(availableItems.get(availIndex1));
 				bagToBeModified.addFirst(availableItems.get(availIndex2));
-				availableItems.set(availIndex1, itemTobeRemoved);
+				availableItems.set(availIndex1, null);
+				availableItems.set(availIndex2, null);
+				availableItems.add(itemTobeRemoved);
+//				availableItems.remove(availIndex1);
+//				availableItems.remove(availIndex2);
+//				availableItems.add(itemTobeRemoved);
 				//We need to remove availIndex2 from availableItems
 			}
 		}
 		for (int p = 0; p < bags.size(); p++) {
 			System.out.println(bags.get(p).toString());
+		}
+		for (int i = 0; i < availableItems.size(); i++) {
+			if(availableItems.get(i)==null) {
+				availableItems.remove(i);
+				i--;
+			}
 		}
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.updateKnapSacks(bags);
