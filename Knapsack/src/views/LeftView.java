@@ -32,8 +32,9 @@ public class LeftView extends VBox{
             public void handle(ActionEvent e) 
             { 
                 //controller.searchNeighborhood(Settings.NEIGHBOR_ITERATIONS);
-            	//controller.oneByOneSearch();
+            	controller.oneByOneSearch();
             	controller.oneByTwoSearch();
+            	controller.oneByOneSearch();
             } 
         };
         solveBtn.setOnAction(event1);

@@ -29,8 +29,8 @@ public class KnapsackHelper {
 		ArrayList<Item> items = new ArrayList<>();
 		Random rand = new Random();
 		for (int i = 0; i < Settings.NUMBER_OF_ITEMS; i++) {
-			int value = rand.nextInt(5)+1;
-			int weight = rand.nextInt(5)+1;
+			int value = rand.nextInt(Settings.RND_INTERVAL)+1;
+			int weight = rand.nextInt(Settings.RND_INTERVAL)+1;
 			float rValue = (float)value/weight;
 			items.add(new Item(i+1, value, weight, rValue));
 		}

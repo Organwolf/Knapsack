@@ -27,8 +27,8 @@ public class KnapsackController {
 	public KnapsackController(Stage primaryStage) {
 		knapsackView = new KnapsackView(primaryStage, this);
 		knapsackView.initWindow();
-		generateDefaultItems();
-		//generateRandomItems();
+		//generateDefaultItems();
+		generateRandomItems();
 		initBags();
 		// generateStupidSolution();
 		generateGreedySolution();
@@ -261,13 +261,11 @@ public class KnapsackController {
 		int availIndex2 = 0;
 		
 		for (int i = 0; i < availableItems.size(); i++) {
-			if(availableItems.get(i)==null) continue;
 			Item itemToInsert1 = availableItems.get(i);
 			float bestDiff = 0;
 			int swapBagIndex = -1;
 			int swapBagItemIndex = -1;
 			for (int i2 = i+1; i2 < availableItems.size(); i2++) {
-				if(availableItems.get(i2)==null) continue;
 				Item itemToInsert2 = availableItems.get(i2);
 				for (int j = 0; j < bags.size(); j++) {
 					Bag tempBag = bags.get(j);
@@ -275,7 +273,7 @@ public class KnapsackController {
 						// swap items i and k in bag j.
 						// If possible + better solution. update best.
 						Item currentItem = tempBag.getItems().get(k);
-						float currentDiff = itemToInsert1.getrValue() + itemToInsert2.getrValue() - currentItem.getrValue();
+						float currentDiff = itemToInsert1.getValue() + itemToInsert2.getValue() - currentItem.getValue();
 						if (currentDiff > bestDiff) {
 							int totalWeight = tempBag.getWeight() + itemToInsert1.getWeight() + itemToInsert2.getWeight() - currentItem.getWeight();
 							if (totalWeight <= Settings.WEIGHT_CAPACITY) {
@@ -296,8 +294,7 @@ public class KnapsackController {
 				bagToBeModified.addFirst(availableItems.get(availIndex1));
 				bagToBeModified.addFirst(availableItems.get(availIndex2));
 				availableItems.set(availIndex1, null);
-				availableItems.set(availIndex2, null);
-				availableItems.add(itemTobeRemoved);
+				availableItems.set(availIndex2, itemTobeRemoved);
 //				availableItems.remove(availIndex1);
 //				availableItems.remove(availIndex2);
 //				availableItems.add(itemTobeRemoved);
@@ -310,7 +307,6 @@ public class KnapsackController {
 		for (int i = 0; i < availableItems.size(); i++) {
 			if(availableItems.get(i)==null) {
 				availableItems.remove(i);
-				i--;
 			}
 		}
 		knapsackView.updateBottomView(availableItems);
