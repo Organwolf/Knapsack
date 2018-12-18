@@ -2,7 +2,6 @@ package utilities;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import main.Settings;
 import pojos.Bag;
 import pojos.Item;
@@ -57,7 +56,6 @@ public class KnapsackHelper {
 	}
 
 	public static ArrayList<Item> getItemListCopy(ArrayList<Item> items){
-		//needs validation
 		ArrayList<Item> tempItems = new ArrayList<>();
 		for (int i = 0; i < items.size(); i++) {
 			int index = items.get(i).getIndex();
@@ -72,7 +70,6 @@ public class KnapsackHelper {
 	
 	public static ArrayList<Bag> getBagListCopy(ArrayList<Bag> bags){
 		ArrayList<Bag> tempBags = new ArrayList<>();
-		//needs validation
 		for (int i = 0; i < bags.size(); i++) {
 			int value = bags.get(i).getValue();
 			int weight = bags.get(i).getWeight();

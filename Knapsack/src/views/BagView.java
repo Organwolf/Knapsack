@@ -8,11 +8,12 @@ import pojos.Item;
 
 public class BagView extends VBox{
 	private String bagName;
+	private String cssLayout;
 	
 	public BagView(String bagName) {
 		this.bagName = bagName;
 	    //10/10 design!
-	    String cssLayout = "-fx-border-color: red;\n" +
+	    cssLayout = "-fx-border-color: red;\n" +
                 "-fx-border-insets: 5;\n" +
                 "-fx-border-width: 3;\n" +
                 "-fx-border-style: dashed;\n";
@@ -31,7 +32,7 @@ public class BagView extends VBox{
 	
 	public void removeAllItems() {
 		this.getChildren().clear(); //Clear all childrenNodes.
-		String cssLayout = "-fx-border-color: red;\n" +
+		cssLayout = "-fx-border-color: red;\n" +
                 "-fx-border-insets: 5;\n" +
                 "-fx-border-width: 3;\n" +
                 "-fx-border-style: dashed;\n";

@@ -10,7 +10,6 @@ import utilities.KnapsackHelper;
 
 public class LeftView extends VBox{
 	private Button solveBtn;
-	private Button stepBtn;
 	private KnapsackController controller;
 	
 	//input controller instance
@@ -21,9 +20,7 @@ public class LeftView extends VBox{
 
 	private void initButtonsInVBox() {
 		solveBtn = new Button("Solve  ");
-		stepBtn = new Button("Step   ");
 		this.getChildren().add(solveBtn);
-		this.getChildren().add(stepBtn);
 		
 //		startBtn.setOnAction((ActionEvent event)->System.out.println("start"));
 //		stepBtn.setOnAction((ActionEvent event)->System.out.println("step"));
@@ -38,19 +35,6 @@ public class LeftView extends VBox{
             		controller.generateStupidSolution();     		
             } 
         };
-        solveBtn.setOnAction(event1);
-        
-		EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() { 
-            public void handle(ActionEvent e) 
-            {
-            		solveBtn.setDisable(true);
-            		controller.pickGreedyItem();
-            } 
-        };
-        stepBtn.setOnAction(event2);
-        
+        solveBtn.setOnAction(event1);     
 	}
-	
-	
-
 }

@@ -1,7 +1,6 @@
 package views;
 
 import java.util.ArrayList;
-
 import javafx.scene.layout.HBox;
 import pojos.Item;
 

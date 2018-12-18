@@ -38,12 +38,6 @@ public class Bag {
 	public void setItems(ArrayList<Item> items) {
 		this.items = items;
 	}
-//	public void setItem(int index, Item item) {
-//		items.set(index, item);
-//		this.weight+=item.getWeight(); //Important!
-//		this.value+=item.getValue();   //Important!
-//		this.rvalue+=item.getrValue();
-//	}
 	
 	public Item getItem(int index) {
 		return items.get(index);

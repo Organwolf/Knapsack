@@ -2,19 +2,11 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.Random;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import main.Settings;
 import pojos.Bag;
 import pojos.Item;
 import utilities.KnapsackHelper;
-import views.BottomView;
-import views.CenterView;
 import views.KnapsackView;
 
 // Controller class for the Knapsack
@@ -30,8 +22,8 @@ public class KnapsackController {
 		//generateDefaultItems();
 		generateRandomItems();
 		initBags();
-		//generateStupidSolution();
-		generateGreedySolution();
+		generateStupidSolution();
+		//generateGreedySolution();
 	}
 
 	private void initBags() {
@@ -43,7 +35,6 @@ public class KnapsackController {
 
 	private void generateDefaultItems() {
 		availableItems = KnapsackHelper.generateDefaultItemList();
-		// Collections.sort(availableItems);
 		knapsackView.updateBottomView(availableItems);
 	}
 
@@ -79,11 +70,6 @@ public class KnapsackController {
 		knapsackView.updateRightView(KnapsackHelper.getrValueAcrossAllKnapsacks(bags));
 	}
 
-	/**
-	 * Work in progress. Algorithm could be simplified. Sorts the item list in
-	 * descending order based on rValue. Then items are picked one by one and placed
-	 * into available bags until weight limit is reached.
-	 */
 	public void generateGreedySolution() {
 		ArrayList<Item> updatedAvailableItems = new ArrayList<>();
 		Collections.sort(availableItems);
@@ -111,11 +97,9 @@ public class KnapsackController {
 			}
 		}
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
-		// System.out.println(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 	}
 
 	public void generateStupidSolution() {
-		// Add the first item to the first bag and then remove it
 		for (int i = 0; i< availableItems.size(); i++) {
 			for (int j = 0; j < bags.size(); j++) {
 				if(bags.get(j).getWeight() + availableItems.get(i).getWeight() <= Settings.WEIGHT_CAPACITY ) {
@@ -158,7 +142,6 @@ public class KnapsackController {
 			if (!(swapBagIndex == -1)) {
 				Bag bagToBeModified = bags.get(swapBagIndex);
 				Item itemTobeRemoved = bagToBeModified.removeItem(swapBagItemIndex);
-				// bagToBeModified.addItem(swapBagItemIndex, itemToInsert);
 				bagToBeModified.addFirst(itemToInsert);
 				availableItems.set(i, itemTobeRemoved);
 			}
@@ -203,20 +186,16 @@ public class KnapsackController {
 			if (!(swapBagIndex == -1)) {
 				Bag bagToBeModified = bags.get(swapBagIndex);
 				Item itemTobeRemoved = bagToBeModified.removeItem(swapBagItemIndex);
-				// bagToBeModified.addItem(swapBagItemIndex, itemToInsert);
 				bagToBeModified.addFirst(availableItems.get(availIndex1));
 				bagToBeModified.addFirst(availableItems.get(availIndex2));
-				availableItems.set(availIndex1, null);
+				availableItems.set(availIndex1, null); //Don't want to mess upp index i.
 				availableItems.set(availIndex2, itemTobeRemoved);
-//				availableItems.remove(availIndex1);
-//				availableItems.remove(availIndex2);
-//				availableItems.add(itemTobeRemoved);
-				//We need to remove availIndex2 from availableItems
 			}
 		}
 		for (int i = 0; i < availableItems.size(); i++) {
 			if(availableItems.get(i)==null) {
 				availableItems.remove(i);
+				i--;
 			}
 		}
 		knapsackView.updateBottomView(availableItems);
