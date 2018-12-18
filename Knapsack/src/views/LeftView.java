@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import main.Settings;
+import utilities.KnapsackHelper;
 
 public class LeftView extends VBox{
 	private Button solveBtn;
@@ -31,10 +32,10 @@ public class LeftView extends VBox{
 		EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
             { 
-                //controller.searchNeighborhood(Settings.NEIGHBOR_ITERATIONS);
-            	controller.oneByOneSearch();
-            	controller.oneByTwoSearch();
-            	controller.oneByOneSearch();
+            		controller.oneByTwoSearch();
+            		controller.twoByOneSearch();
+            		controller.oneByOneSearch();
+            		controller.generateStupidSolution();     		
             } 
         };
         solveBtn.setOnAction(event1);

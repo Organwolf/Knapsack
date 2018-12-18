@@ -30,7 +30,7 @@ public class KnapsackController {
 		//generateDefaultItems();
 		generateRandomItems();
 		initBags();
-		// generateStupidSolution();
+		//generateStupidSolution();
 		generateGreedySolution();
 	}
 
@@ -49,7 +49,6 @@ public class KnapsackController {
 
 	private void generateRandomItems() {
 		availableItems = KnapsackHelper.generateRandomItemList();
-		Collections.sort(availableItems);
 		knapsackView.updateBottomView(availableItems);
 	}
 
@@ -87,6 +86,7 @@ public class KnapsackController {
 	 */
 	public void generateGreedySolution() {
 		ArrayList<Item> updatedAvailableItems = new ArrayList<>();
+		Collections.sort(availableItems);
 		for (int i = 0; i < availableItems.size(); i++) {
 			Item tempItem = availableItems.get(i);
 			boolean itemChosen = false;
@@ -116,104 +116,20 @@ public class KnapsackController {
 
 	public void generateStupidSolution() {
 		// Add the first item to the first bag and then remove it
-		Item firstItem = availableItems.get(0);
-		availableItems.remove(0);
-		Bag bag1 = bags.get(0);
-		bag1.addFirst(firstItem);
-		System.out.println(bag1.getWeight());
+		for (int i = 0; i< availableItems.size(); i++) {
+			for (int j = 0; j < bags.size(); j++) {
+				if(bags.get(j).getWeight() + availableItems.get(i).getWeight() <= Settings.WEIGHT_CAPACITY ) {
+					bags.get(j).addLast(availableItems.get(i));
+					availableItems.remove(i);
+					i--;
+					break;
+				}
+			}
+		}
 		// Update view
 		knapsackView.updateBottomView(availableItems);
-		knapsackView.addItemToKnapSack(0, bags.get(0).getItems().get(0));
-		knapsackView.updateRightView(KnapsackHelper.getrValueAcrossAllKnapsacks(bags));
-	}
-
-	public void searchNeighborhood(int neighbors) {
-		Bag firstKnapsack = bags.get(0);
-		Bag secondKnapsack = bags.get(1);
-		Item currentItem;
-		Item nextItem;
-		int wDiff;
-		float bestRelative = 0;
-		float currentRelative;
-
-		// number of neighbors created/checked
-		for (int neighbor = 0; neighbor < neighbors; neighbor++) {
-
-			// check if first knapsack has items
-			if (!firstKnapsack.getItems().isEmpty()) {
-				currentItem = firstKnapsack.getLastItem();
-
-				// calculate weight cap. left in second knapsack
-				wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
-
-				// check if currentItem fits in the second knapsack
-				// if not remove item(s) in second knapsack
-				while (wDiff < currentItem.getWeight()) {
-					nextItem = secondKnapsack.getLastItem();
-					secondKnapsack.removeLast();
-					availableItems.add(nextItem);
-					wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
-				}
-
-				// while there is room fill the second knapsack up
-				while (wDiff >= currentItem.getWeight()) {
-					secondKnapsack.addFirst(currentItem);
-					firstKnapsack.removeLast();
-					wDiff = Settings.WEIGHT_CAPACITY - secondKnapsack.getWeight();
-					if (!firstKnapsack.getItems().isEmpty()) {
-						currentItem = firstKnapsack.getLastItem();
-					} else {
-						break;
-					}
-				}
-			}
-
-			// pick the next available item
-			if (!availableItems.isEmpty()) {
-				currentItem = availableItems.get(0);
-				wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
-
-				// fill the first knapsack if needed/possible
-				while (wDiff >= currentItem.getWeight()) {
-					availableItems.remove(0);
-					firstKnapsack.addFirst(currentItem);
-					wDiff = Settings.WEIGHT_CAPACITY - firstKnapsack.getWeight();
-					if (!availableItems.isEmpty()) {
-						currentItem = availableItems.get(0);
-					} else {
-						break;
-					}
-				}
-			}
-
-			// check current relative against current best
-			currentRelative = firstKnapsack.getrValue() + secondKnapsack.getrValue();
-			System.out.println(currentRelative);
-			if (bestRelative < currentRelative) {
-				bestRelative = currentRelative; // should I save away the bags?
-			}
-		}
-
-		// print best relative after iterating through neighbors
-		System.out.println("Best relative value in this neighborhood: " + bestRelative);
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
 		knapsackView.updateKnapSacks(bags);
-	}
-
-	public void searchNh() {
-		// for (int i = 0; i < Settings.NEIGHBOR_ITERATIONS; i++) {
-		// skapa arraylist kopia av bags genom deep copy
-		ArrayList<Bag> tempBags = KnapsackHelper.getBagListCopy(bags);
-		// skapa arraylist kopia av items genom deep copy
-		ArrayList<Item> tempItems = KnapsackHelper.getItemListCopy(availableItems);
-		availableItems.get(0).setValue(100);
-		for (int i = 0; i < availableItems.size(); i++) {
-			System.out.println("original value: " + availableItems.get(i).getValue());
-		}
-		for (int i = 0; i < tempItems.size(); i++) {
-			System.out.println("copy value: " + tempItems.get(i).getValue());
-		} // I was here!
-
-		// }
 	}
 	
 	public void oneByOneSearch() {
@@ -248,9 +164,6 @@ public class KnapsackController {
 			}
 
 		}
-//		for (int p = 0; p < bags.size(); p++) {
-//			System.out.println(bags.get(p).toString());
-//		}
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.updateKnapSacks(bags);
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
@@ -301,14 +214,66 @@ public class KnapsackController {
 				//We need to remove availIndex2 from availableItems
 			}
 		}
-		for (int p = 0; p < bags.size(); p++) {
-			System.out.println(bags.get(p).toString());
-		}
 		for (int i = 0; i < availableItems.size(); i++) {
 			if(availableItems.get(i)==null) {
 				availableItems.remove(i);
 			}
 		}
+		knapsackView.updateBottomView(availableItems);
+		knapsackView.updateKnapSacks(bags);
+		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
+	}
+
+	public void twoByOneSearch() {
+		int availIndex = 0;
+		for (int i = 0; i < availableItems.size(); i++) {
+			Item itemToInsert1 = availableItems.get(i);
+			float bestDiff = 0;
+			int swapBagIndex = -1;
+			int swapItemIndex1 = -1;
+			int swapItemIndex2 = -1;
+				for (int j = 0; j < bags.size(); j++) {
+					Bag tempBag = bags.get(j);
+					for (int k = 0; k < tempBag.getnbrOfItems(); k++) {
+						for (int l = 0; l < tempBag.getnbrOfItems(); l++) {
+							if (k != l) {
+								Item currentItem1 = tempBag.getItems().get(k);
+								Item currentItem2 = tempBag.getItems().get(l);
+								float currentDiff = itemToInsert1.getValue() - currentItem1.getValue() - currentItem2.getValue();
+								if (currentDiff > bestDiff) {
+									int totalWeight = tempBag.getWeight() + itemToInsert1.getWeight() - currentItem1.getWeight() - currentItem2.getWeight();
+									if (totalWeight <= Settings.WEIGHT_CAPACITY) {
+										availIndex = i;
+										swapBagIndex = j;
+										swapItemIndex1 = k;
+										swapItemIndex2 = l;
+										bestDiff = currentDiff;
+									}
+								}
+							}
+						}
+					}
+				}
+
+			if (!(swapBagIndex == -1)) {
+				Bag bagToBeModified = bags.get(swapBagIndex);
+				Item itemTobeRemoved1;
+				Item itemTobeRemoved2;
+				if (swapItemIndex1>swapItemIndex2) {
+					itemTobeRemoved1 = bagToBeModified.removeItem(swapItemIndex1);
+					itemTobeRemoved2 = bagToBeModified.removeItem(swapItemIndex2);
+				}
+				else {
+					itemTobeRemoved2 = bagToBeModified.removeItem(swapItemIndex2);
+					itemTobeRemoved1 = bagToBeModified.removeItem(swapItemIndex1);
+				}
+
+				bagToBeModified.addFirst(availableItems.get(availIndex));
+				availableItems.set(availIndex, itemTobeRemoved1);
+				availableItems.add(itemTobeRemoved2);
+			}
+		}
+
 		knapsackView.updateBottomView(availableItems);
 		knapsackView.updateKnapSacks(bags);
 		knapsackView.updateRightView(KnapsackHelper.getValueAcrossAllKnapsacks(bags));
